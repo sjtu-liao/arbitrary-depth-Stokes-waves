@@ -1,4 +1,4 @@
-# Public MSN and FNO Scripts
+# MSN and FNO Scripts
 
 This folder contains the public release version of the training and testing
 code for the Stokes-wave MSN and FNO models.
