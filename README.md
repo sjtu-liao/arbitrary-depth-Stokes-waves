@@ -1,18 +1,14 @@
-# MSN and FNO Scripts
+# arbitrary depth Stokes waves
 
 This folder contains the public release version of the training and testing
-code for the Stokes-wave MSN and FNO models.
+code for the arbitrary depth Stokes-wave MSN and FNO models.
 
 Files:
 
-- `MSN.py`: three-stage multi-stage multi-scale network for predicting
-  Fourier coefficients and the Bernoulli constant.
-- `FNO.py`: Fourier neural operator for inverse conformal mapping and velocity
-  field evaluation.
+- `MSN.py`: three-stage multi-stage multi-scale network for predicting Fourier coefficients and the Bernoulli constant.
+- `FNO.py`: Fourier neural operator for inverse conformal mapping.
 
-This subfolder is intended for a code-only public upload. Model weights,
-cached data, and other large artifacts are intentionally excluded for now and
-can be released after paper acceptance.
+This subfolder is intended for a code-only public upload. Model weights can be released after paper acceptance.
 
 ## Requirements
 
@@ -23,23 +19,6 @@ pip install numpy torch tqdm
 ```
 
 `tqdm` is optional. CUDA is used automatically when available.
-
-## Model Release Plan
-
-The training, testing, and inference code is included now. Checkpoint files are
-not included in this package for the current pre-acceptance release.
-
-The model files will be released later:
-
-```text
-checkpoints/
-  msn/
-    stage1/
-    global_refiner/
-    stage2/
-  fno/
-    best_fno_thetaR.pt
-```
 
 ## Input Data Format
 
@@ -142,14 +121,6 @@ python FNO.py train \
 If `--val-coeffs-dir` is omitted, the script randomly splits `--coeffs-dir`
 using `--train-split`.
 
-By default the public script uses the normalized steepness channel
-`stp / ymax(r0)`, matching the manuscript notation. To load or train a legacy
-model that used raw `stp`, pass:
-
-```bash
-python FNO.py train ... --no-use-normalized-stp
-```
-
 FNO checkpoint:
 
 ```text
@@ -171,14 +142,6 @@ Outputs:
   components, and velocity magnitude.
 - `eval_fno/dat/`: Tecplot `.dat` files for ground truth, prediction, and
   absolute error fields. Disable this with `--no-write-dat`.
-
-When testing, the steepness-channel setting is read from the checkpoint. It can
-be overridden manually:
-
-```bash
-python FNO.py test ... --use-normalized-stp 1
-python FNO.py test ... --use-normalized-stp 0
-```
 
 ## Checkpoint Usage
 
